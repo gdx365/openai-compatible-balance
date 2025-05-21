@@ -79,6 +79,7 @@ async def list_models(authorization: str = Header(None)):
         api_key = next(key_cycle)
         logger.info(f"Using API key: {api_key[:8]}...")
     try:
+        print(f"get models ") 
         client = openai.OpenAI(api_key=api_key, base_url=config.settings.BASE_URL)
         response = client.models.list()
         logger.info("Successfully retrieved models list")
@@ -96,6 +97,7 @@ async def chat_completion(request: ChatRequest, authorization: str = Header(None
         logger.info(f"Using API key: {api_key[:8]}...")
 
     try:
+        print(f"Chat completion request - Model: {request.model}") 
         logger.info(f"Chat completion request - Model: {request.model}")
         client = openai.OpenAI(api_key=api_key, base_url=config.settings.BASE_URL)
         response = client.chat.completions.create(
@@ -144,6 +146,7 @@ async def embedding(request: EmbeddingRequest, authorization: str = Header(None)
 async def health_check(authorization: str = Header(None)):
     await verify_authorization(authorization)
     logger.info("Health check endpoint called")
+    print("Health check endpoint called") 
     return {"status": "healthy"}
 
 
